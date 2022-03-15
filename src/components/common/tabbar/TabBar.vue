@@ -1,4 +1,4 @@
-<!-- 导航组件 -->
+<!-- 下面整个导航组件 -->
 <template>
   <div>
     <div id="tab-bar">

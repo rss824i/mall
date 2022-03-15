@@ -1,13 +1,16 @@
 <template>
-  <p>123123你好</p>
+  <div>
+    <router-view></router-view>
+    <main-tab-bar />
+  </div>
 </template>
 
 <script>
-  // import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
+  import MainTabBar from 'components/content/maintabbar/MainTabBar.vue'
   export default {
     name: "App",
     components: {
-      // MainTabBar
+      MainTabBar
     },
   };
 </script>

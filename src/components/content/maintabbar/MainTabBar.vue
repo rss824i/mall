@@ -2,52 +2,28 @@
 <template>
   <div>
     <tab-bar>
-      <template #default>
-        <tab-bar-item path="/home">
-          <template #item-icon>
-            <img src="@/assets/img/tabbar/home.svg" />
-          </template>
-          <template #item-icon-active>
-            <img src="@/assets/img/tabbar/home_active.svg" />
-          </template>
-          <template #item-text>
-            <div>首页</div>
-          </template>
-        </tab-bar-item>
-        <tab-bar-item path="/category">
-          <template #item-icon>
-            <img src="@/assets/img/tabbar/category.svg" />
-          </template>
-          <template #item-icon-active>
-            <img src="@/assets/img/tabbar/category_active.svg" />
-          </template>
-          <template #item-text>
-            <div>分类</div>
-          </template>
-        </tab-bar-item>
-        <tab-bar-item path="/shopcart">
-          <template #item-icon>
-            <img src="@/assets/img/tabbar/shopcart.svg" />
-          </template>
-          <template #item-icon-active>
-            <img src="@/assets/img/tabbar/shopcart_active.svg" />
-          </template>
-          <template #item-text>
-            <div>购物车</div>
-          </template>
-        </tab-bar-item>
-        <tab-bar-item path="/profile">
-          <template #item-icon>
-            <img src="@/assets/img/tabbar/profile.svg" />
-          </template>
-          <template #item-icon-active>
-            <img src="@/assets/img/tabbar/profile_active.svg" />
-          </template>
-          <template #item-text>
-            <div>我的</div>
-          </template>
-        </tab-bar-item>
-      </template>
+      <!--动态传入 path  -->
+      <tab-bar-item path="/home" activeColor="pink">
+        <!-- 使用src找路径，且用了路径别名  需要在前面加上~ -->
+        <img slot="item-icon" src="~assets/img/tabbar/home.svg"/>
+        <img slot="item-icon-active" src="~assets/img/tabbar/home_active.svg"/>
+        <div slot="item-text">Home</div>
+      </tab-bar-item>
+      <tab-bar-item path="/category" activeColor="pink">
+       <img slot="item-icon" src="~assets/img/tabbar/category.svg"/>
+       <img slot="item-icon-active" src="~assets/img/tabbar/category_active.svg"/>
+       <div slot="item-text">Category</div>
+      </tab-bar-item>
+      <tab-bar-item path="/cart" activeColor="pink">
+        <img slot="item-icon" src="~assets/img/tabbar/shopcart.svg"/>
+        <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg"/>
+        <div slot="item-text">Shopcart</div>
+      </tab-bar-item>
+      <tab-bar-item path="/profile" activeColor="pink">
+        <img slot="item-icon" src="~assets/img/tabbar/profile.svg"/>
+        <img slot="item-icon-active" src="~assets/img/tabbar/profile_active.svg"/>
+        <div slot="item-text">Profile</div>
+      </tab-bar-item>
     </tab-bar>
   </div>
 </template>
@@ -57,8 +33,8 @@
   import TabBar from 'components/common/tabbar/TabBar.vue'
   import TabBarItem from 'components/common/tabbar/TabBarItem.vue'
   export default {
-    name: "MainTabBar",
-    components: {
+    name:"MainTabBar",
+    components:{
       // 注册组件
       TabBar,
       TabBarItem
@@ -67,5 +43,5 @@
 </script>
 
 <style>
-
+ 
 </style>
