@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 显示跳转页面的占位 -->
     <router-view></router-view>
     <main-tab-bar />
   </div>
