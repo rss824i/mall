@@ -4,8 +4,10 @@
 :root {
   /* css定义变量 */
   --color-text: #666;  /*文字颜色*/
-  --color-high-text: #ff5777; /*文字高亮颜色*/
-  --color-tint: #ff8198; /*整体背景颜色*/
+  /*  --color-high-text: #ff5777;  */  /*文字高亮颜色*/
+  /*   --color-tint: #ff8198; */ /*整体背景颜色*/
+  --color-high-text: #296ff0;    /*文字高亮颜色*/
+  --color-tint: #2d53d1; /*整体背景颜色*/
   --color-background: #fff;
   --font-size: 14px;
   --line-height: 1.5;
