@@ -13,16 +13,17 @@
 
 <script>
   import BScroll from 'better-scroll'
- export default {
-   name: '',
-   data () {
-     return {
-         scroll :null
-     }
-   },
+  export default {
+    name: '',
+    data () {
+      return {
+          scroll :null
+      }
+    },
    mounted(){
-    this.scroll = new BScroll(this.$refs.wrapper,{
-        
+    
+     this.scroll = new BScroll(this.$refs.wrapper,{
+        // observeDOM:true
     })
    },
    components:{},

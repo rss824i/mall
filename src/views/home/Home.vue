@@ -19,6 +19,7 @@
       <goods-list :goods="showGoods" />
 
     </scroll>
+
   </div>
 
 </template>
@@ -123,6 +124,9 @@
       showGoods() {
         return this.goods[this.currentType].list
       }
+    },
+    mounted(){
+      
     }
   }
 </script>
@@ -150,14 +154,14 @@
     /* tab-control在达到指定位置时固定不动 */
     /* 在正常没达到设定的位置之前 position默认是 sticky  达到设定的位置的时候，会自动改为fixed */
     /* 部分浏览器不支持这个属性，移动端都支持 */
-    position: sticky;
+    /* position: sticky; */
     top: 44px;
     z-index: 9;
   }
 
   .content {
-    height: 600px;
-    /* background-color: rgb(46, 49, 202); */
+    height: calc(100% - 98px);
+    background-color: rgb(46, 49, 202);
 
     /* overflow: hidden; */
   }
