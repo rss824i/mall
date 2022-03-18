@@ -18,6 +18,7 @@
          currentIndex: 0
      }
    },
+//    父传子
    props:{
        titles:{
            type:Array,
@@ -33,7 +34,9 @@
    watch: {},
    methods: {
        itemClick(index){
-           this.currentIndex=index
+           this.currentIndex=index;
+           // 子传父
+           this.$emit('tabClick',index)
        }
    }
 }
