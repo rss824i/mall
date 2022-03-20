@@ -35,7 +35,7 @@
    methods: {
        itemClick(index){
            this.currentIndex=index;
-           // 子传父
+           // 子传父  发出事件tabClick  参数为Index
            this.$emit('tabClick',index)
        }
    }

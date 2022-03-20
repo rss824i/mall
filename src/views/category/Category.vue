@@ -122,6 +122,7 @@
       // this.bs = new BScroll('.content1', {})
     },
     mounted(){
+      // 使用BScroll 必须设置一个高度，且可滚动区域的子级元素只能有一个，子级的子级元素数量不限
       this.bs = new BScroll(document.querySelector(".content1"), {
         // 监控滚动位置
         probeType:3,
@@ -131,7 +132,7 @@
 
       this.bs.on('scroll',(position)=>{
           // 上拉加载位置
-          // console.log(position);
+          console.log(position);
       })
 
       this.bs.on('pullingUp',()=>{

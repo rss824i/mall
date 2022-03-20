@@ -4,9 +4,13 @@
     <nav-bar class="home-nav">
       <div slot="center">Shopping Street</div>
     </nav-bar>
-
-    <scroll class="content">
-
+    <!-- 滚动 -->
+    <!-- 
+      ref 如果绑定在组件的，通过this.$refs.值 获取的是一个组件对象
+      如果绑定到普通元素上，获取的是元素对象
+    -->
+    <!--  @scrollOn="contentScroll"  使用contentScroll监听子组件发出的事件scrollOn -->
+    <scroll class="content" ref="scrollref"  :probe-type="3"  @scrollOn="contentScroll">
       <!-- 轮播图 -->
       <!-- 父传子  动态绑定 将banners动态绑定到子组件的banners上（:子组件属性） -->
       <home-swiper :banners='banners'></home-swiper>
@@ -17,8 +21,9 @@
       <!-- @tabClick="tabClick" 子传父 -->
       <tab-control :titles="['Fashion','Fangle','Choiceness']" @tabClick="tabClick"></tab-control>
       <goods-list :goods="showGoods" />
-
     </scroll>
+    <!-- 监听组件的原生事件时需要添加native才能监听-->
+    <back-top @click.native='backClick'  v-show="backTopIsShow"></back-top>
 
   </div>
 
@@ -28,6 +33,7 @@
   import NavBar from 'components/common/navbar/NavBar.vue'
   import TabControl from '@/components/content/tabControl/TabControl.vue'
   import Scroll from 'components/common/scroll/scroll'
+  import BackTop from 'components/content/backTop/BackTop'
 
   import HomeSwiper from 'views/home/childComps/HomeSwiper.vue'
   import HomeRecommendView from 'views/home/childComps/HomeRecommendView'
@@ -61,7 +67,9 @@
             list: []
           },
         },
-        currentType: "pop"
+        currentType: "pop",
+        // 回到顶部是否显示
+        backTopIsShow: false
       }
     },
     components: {
@@ -72,7 +80,8 @@
       HomeRecommendView,
       FeatureView,
       GoodsList,
-      Scroll
+      Scroll,
+      BackTop
     },
     // 组件创建完成后请求数据
     created() {
@@ -87,6 +96,7 @@
       /*
        * 事件监听
        */
+      // 获取子组件tab-control传回的值（子传父）
       tabClick(index) {
         //  console.log(index);
         switch (index) {
@@ -101,6 +111,18 @@
             break
         }
       },
+      // 监听bakcTop组件的点击
+      backClick(){
+        // console.log("组件点击");
+        // 可以通过ref拿到组件对象，且可以使用其中的属性、方法等
+        console.log( this.$refs.scrollref.message);
+
+        this.$refs.scrollref.scrollTo(0,0,2000)
+      },
+      contentScroll(position){
+        // console.log(position.y);
+        this.backTopIsShow=-position.y > 1000
+      },
       /* 
        * 网络请求
        */
@@ -114,13 +136,15 @@
       getHomeGoods(type) {
         const page = this.goods[type].page + 1
         getHomeGoods(type, page).then(res => {
-          console.log(res);
+          // console.log(res);
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
         })
       }
     },
+    // 初始化的时候执行和相关的data发生变化后执行
     computed: {
+      // 当currentType（goods所显示的数据类型）变化时传入对应的数据
       showGoods() {
         return this.goods[this.currentType].list
       }
@@ -135,6 +159,10 @@
   /* scoped 作用域，css只在当前作用域生效 */
   #home {
     padding-top: 43px;
+    height: 100vh;
+
+    /* 相对定位 */
+    position: relative;
   }
 
   /* 设置首页导航栏的背景颜色 */
@@ -160,9 +188,19 @@
   }
 
   .content {
-    height: calc(100% - 98px);
-    background-color: rgb(46, 49, 202);
-
+    /* 隐藏多余区域 */
     /* overflow: hidden; */
-  }
+   /* 绝对定位 */
+    position: absolute;
+    /* 上部分定位 */
+    top: 44px;
+    /* 下部分定位 */
+    bottom: 49px;
+}
+
+  /* .content {
+    height: calc(100% -  93);
+    margin-top: 44px;
+    overflow: hidden;
+  } */
 </style>
