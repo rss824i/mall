@@ -135,14 +135,14 @@
         // console.log( this.$refs.scrollref.message);
 
         // 调用scroll回到顶部函数   // this.scroll && =>scroll存在时再执行后面的代码
-        this.scroll &&  this.$refs.scrollref.scrollTo(0,0,2000)
+        this.$refs.scrollref &&  this.$refs.scrollref.scrollTo(0,0,2000)
       },
       contentScroll(position){
         // console.log(position.y);
         this.backTopIsShow=-position.y > 1000
       },
       loadMore(){
-        console.log("上拉加载");
+        // console.log("上拉加载");
         this.getHomeGoods(this.currentType)
       },
       /* 
@@ -163,9 +163,8 @@
           // console.log(res);
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
-
           // 可再次上拉加载
-           this.scroll && this.$refs.scrollref.finishPullUp()
+           this.$refs.scrollref && this.$refs.scrollref.finishPullUp()
         })
 
       }
@@ -181,7 +180,7 @@
       // 监听item中图片加载完成
       this.$bus.$on('itemImageLoad',()=>{
         // console.log("加载图片 -home"); 
-       this.scroll &&  this.$refs.scrollref.refresh();
+       this.$refs.scrollref &&  this.$refs.scrollref.refresh();
       })
     }
 
