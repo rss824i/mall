@@ -1,6 +1,7 @@
 <template>
   <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="">
+    <!-- vue 提供监听图片加载完成的方式 @load -->
+    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
      <div class="goods-info">
        <p>{{goodsItem.title}}</p>
        <span class="price">{{goodsItem.price}}</span>
@@ -28,7 +29,18 @@
    // mounted () {},
    computed: {},
    watch: {},
-   methods: {}
+   methods: {
+    //  监听图片是否加载完
+     imageLoad(){
+      //  console.log("图片加载完成");
+      //  方式一：可以使用层层向外发送监听 this.$emit
+      //  方式二：可以在vuex中定义一个变量，没加载完一个图更新一次，home页面再监听变量的变化，从而刷新可滚动的高度
+      //  方式三：事件总线  发射时间：this.$bus.$emit('aaa')     监听事件：this.$bus.$on('aaa')
+     
+    //  方式三使用：在main.js中给vue原型添加$bus,bus为vue实例
+     this.$bus.$emit('itemImageLoad')
+     }
+   }
 }
 </script>
 

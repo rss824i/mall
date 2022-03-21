@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-     <goods-list-item v-for="(item,index) in goods" :goods-item="item"  :key="item.title"/>
+     <goods-list-item v-for="(item,index) in goodsList" :goods-item="item"  :key="index"/>
   </div>
 </template> 
 
@@ -9,7 +9,7 @@ import GoodsListItem from './GoodsListItem.vue'
  export default {
    name: 'GoodsList',
    props:{
-       goods:{
+       goodsList:{
            type: Array,
             default(){
                 return []

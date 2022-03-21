@@ -10,7 +10,11 @@
       如果绑定到普通元素上，获取的是元素对象
     -->
     <!--  @scrollOn="contentScroll"  使用contentScroll监听子组件发出的事件scrollOn -->
-    <scroll class="content" ref="scrollref"  :probe-type="3"  @scrollOn="contentScroll">
+    <scroll class="content" ref="scrollref"  
+        :probe-type="3"  
+        @scrollOn1="contentScroll"
+        :pull-up-load="true"
+        @pullingUp1="loadMore">
       <!-- 轮播图 -->
       <!-- 父传子  动态绑定 将banners动态绑定到子组件的banners上（:子组件属性） -->
       <home-swiper :banners='banners'></home-swiper>
@@ -20,7 +24,7 @@
       <feature-view />
       <!-- @tabClick="tabClick" 子传父 -->
       <tab-control :titles="['Fashion','Fangle','Choiceness']" @tabClick="tabClick"></tab-control>
-      <goods-list :goods="showGoods" />
+      <goods-list :goodsList="showGoods" />
     </scroll>
     <!-- 监听组件的原生事件时需要添加native才能监听-->
     <back-top @click.native='backClick'  v-show="backTopIsShow"></back-top>
@@ -91,8 +95,21 @@
       this.getHomeGoods("pop")
       this.getHomeGoods("new")
       this.getHomeGoods("sell")
+
+
     },
     methods: {
+      // 防抖函数
+      debounce(func,dolay){
+        let timer = null
+        return function(...args){
+          if (timer)   clearTimeout(timer)
+          timer = setTimeout(() => {
+            func.apply(this,args)
+          }, dolay);
+        }
+      },
+
       /*
        * 事件监听
        */
@@ -115,17 +132,23 @@
       backClick(){
         // console.log("组件点击");
         // 可以通过ref拿到组件对象，且可以使用其中的属性、方法等
-        console.log( this.$refs.scrollref.message);
+        // console.log( this.$refs.scrollref.message);
 
-        this.$refs.scrollref.scrollTo(0,0,2000)
+        // 调用scroll回到顶部函数   // this.scroll && =>scroll存在时再执行后面的代码
+        this.scroll &&  this.$refs.scrollref.scrollTo(0,0,2000)
       },
       contentScroll(position){
         // console.log(position.y);
         this.backTopIsShow=-position.y > 1000
       },
+      loadMore(){
+        console.log("上拉加载");
+        this.getHomeGoods(this.currentType)
+      },
       /* 
        * 网络请求
        */
+      // 获取banner和recommend数据
       getHomeMutidate() {
         getHomeMutidate().then(res => {
           // console.log(res);
@@ -133,13 +156,18 @@
           this.recommends = res.data.recommend.list
         })
       },
+      // 获取指定类型数据
       getHomeGoods(type) {
         const page = this.goods[type].page + 1
         getHomeGoods(type, page).then(res => {
           // console.log(res);
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
+
+          // 可再次上拉加载
+           this.scroll && this.$refs.scrollref.finishPullUp()
         })
+
       }
     },
     // 初始化的时候执行和相关的data发生变化后执行
@@ -150,8 +178,13 @@
       }
     },
     mounted(){
-      
+      // 监听item中图片加载完成
+      this.$bus.$on('itemImageLoad',()=>{
+        // console.log("加载图片 -home"); 
+       this.scroll &&  this.$refs.scrollref.refresh();
+      })
     }
+
   }
 </script>
 
