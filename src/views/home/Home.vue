@@ -100,13 +100,13 @@
     },
     methods: {
       // 防抖函数
-      debounce(func,dolay){
+      debounce(func,delay){
         let timer = null
         return function(...args){
           if (timer)   clearTimeout(timer)
           timer = setTimeout(() => {
             func.apply(this,args)
-          }, dolay);
+          }, delay);
         }
       },
 
@@ -177,11 +177,15 @@
       }
     },
     mounted(){
+      // 获取防抖函数
+      const refresh = this.debounce(this.$refs.scrollref.refresh,100)
       // 监听item中图片加载完成
       this.$bus.$on('itemImageLoad',()=>{
         // console.log("加载图片 -home"); 
-       this.$refs.scrollref &&  this.$refs.scrollref.refresh();
+        //  this.$refs.scrollref &&  this.$refs.scrollref.refresh(); //会频繁调用
+       refresh()  //执行函数
       })
+
     }
 
   }
