@@ -1,7 +1,10 @@
 <template>
   <div>
-    <!-- 显示跳转页面的占位 -->
-    <router-view></router-view>
+    <!-- 创建后不会被销毁，例如首页切换其他页面后，再次回来还可以停留在原来位置 -->
+    <keep-alive>
+      <!-- 显示跳转页面的占位 -->
+      <router-view></router-view>
+    </keep-alive>
     <main-tab-bar />
   </div>
 </template>

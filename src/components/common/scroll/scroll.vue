@@ -37,6 +37,7 @@
     mounted() {
       // 1.创建BScroll对象
       this.scroll = new BScroll(this.$refs.wrapper, {
+        observeDom: true, 
         // 设置内容可以点击
         click: true,
         // 监控滚动 0,1 ->不监听 ; 2 ->监听手指滚动 ；3 ->只要是滚动 都侦测（监听惯性）  
@@ -46,17 +47,21 @@
       })
 
       //  2.监听滚动位置
-      this.scroll.on('scroll', (position) => {
-        // console.log(position);
-        // 发出事件，参数为position；外部可监听此事件
-        this.$emit('scrollOn1', position)
-      })
+      if(this.probeType==2 || this.probeType==3){
+        this.scroll.on('scroll', (position) => {
+          // console.log(position);
+          // 发出事件，参数为position；外部可监听此事件
+          this.$emit('scrollOn1', position)
+        })
+      }
 
       // 3.监听上拉加载事件
-      this.scroll.on("pullingUp", () => {
-        // console.log("上拉加载");
-        this.$emit('pullingUp1')
-      })
+      if(this.pullUpLoad){
+        this.scroll.on("pullingUp", () => {
+          // console.log("上拉加载");
+          this.$emit('pullingUp1')
+        })
+      }
 
 
 
@@ -80,9 +85,14 @@
       },
       // 重新计算可滚动的高度（处理网络不好时由于加载图片比较慢，导致滚动不了问题）
       refresh() {
-        console.log("计算高度");
+        // console.log("计算高度");
         this.scroll.refresh()
+      },
+      // 获取当前滚动位置
+      getScrollY(){
+        return this.scroll.y ? this.scroll.y : 0
       }
+
     }
   }
 </script>
