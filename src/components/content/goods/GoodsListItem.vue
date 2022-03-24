@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item">
     <!-- vue 提供监听图片加载完成的方式 @load -->
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="goodsItem.show.img" alt="" @load="imageLoad"  @click="itemClick">
      <div class="goods-info">
        <p>{{goodsItem.title}}</p>
        <span class="price">{{goodsItem.price}}</span>
@@ -39,6 +39,17 @@
      
     //  方式三使用：在main.js中给vue原型添加$bus,bus为vue实例
      this.$bus.$emit('itemImageLoad')
+     },
+    //  监听点击事件
+     itemClick(){
+      //  console.log("跳转");
+       this.$router.push('/detail/'+this.goodsItem.iid) //push可以返回  动态路由
+      //  this.$router.push({
+      //    path: 'detail',
+      //    query: {
+        //参数
+      //    }
+      //  })
      }
    }
 }
