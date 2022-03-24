@@ -5,7 +5,7 @@
       <div slot="center">Shopping Street</div>
     </nav-bar>
       <!-- 分类：  @tabClick="tabClick" 子传父 -->
-      <tab-control :titles="['Fashion','Fangle','Choiceness']" 
+      <tab-control :titles="['流行','新款','精选']" 
                             @tabClick="tabClick"
                              ref="tabControl1" class="tab-control" v-show="isTabFixed"/>
     <!-- 滚动 -->
@@ -27,7 +27,7 @@
       <!--  -->
       <feature-view />
       <!-- 分类：  @tabClick="tabClick" 子传父 -->
-      <tab-control :titles="['Fashion','Fangle','Choiceness']" 
+      <tab-control :titles="['流行','新款','精选']" 
                             @tabClick="tabClick"
                              ref="tabControl2" />
       <goods-list :goodsList="showGoods" />
