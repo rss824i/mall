@@ -65,7 +65,7 @@
 
 
 
-      this.scroll.refresh()
+      // this.scroll.refresh()
     },
     components: {},
     created() {},

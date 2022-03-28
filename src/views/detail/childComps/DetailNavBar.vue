@@ -40,8 +40,8 @@
       },
       //    返回按钮点击
       backClick() {
-        this.$router.go(-1) //返回方式1
-        // this.$router.back() //返回方式2
+        // this.$router.go(-1) //返回方式1
+        this.$router.back() //返回方式2
       }
     }
   }

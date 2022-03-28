@@ -2,7 +2,7 @@
   <div id='home'>
     <!-- 首页导航 -->
     <nav-bar class="home-nav">
-      <div slot="center">Shopping Street</div>
+      <div slot="center">购物街</div>
     </nav-bar>
       <!-- 分类：  @tabClick="tabClick" 子传父 -->
       <tab-control :titles="['流行','新款','精选']" 
@@ -205,17 +205,17 @@
     destroyed(){
       console.log("home销毁");
     },
-    // 进入活跃时执行
+    // 进入活跃时执行  activated/deactivated => 钩子函数
     activated(){
-      // console.log("activated");
       this.$refs.scrollref.scrollTo(0,this.saveY,0)
       // 重新计算一次高度，处理切换回来不能滚动问题
       this.$refs.scrollref.refresh()
+      console.log("回到位置：",this.saveY);
     },
     // 进入不活跃时执行
     deactivated(){
-      // console.log("deactivated");
       this.saveY=this.$refs.scrollref.getScrollY()
+      console.log("记录位置：",this.saveY);
     }
 
   }

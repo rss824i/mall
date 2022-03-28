@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav" />
-    <scroll class="content">
+    <scroll class="content" ref="scrollRef">
       <!-- 导航栏 -->
       <!-- 轮播图 -->
       <detail-swiper :topImages="topImages" />
@@ -9,6 +9,10 @@
       <detail-base-info :goods="goods" />
       <!-- 商家信息 -->
       <detail-shop-info :shop="shop" />
+      <!-- 商品图片信息等 -->
+      <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"/>
+      <!-- 尺码参数的信息 -->
+      <detail-param-info :paramInfo="paramInfo"/>
     </scroll>
   </div>
 </template>
@@ -19,14 +23,16 @@
   import DetailNavBar from './childComps/DetailNavBar.vue'
   import DetailBaseInfo from './childComps/DetailBaseInfo.vue'
   import DetailShopInfo from './childComps/DetailShopInfo.vue'
-
+  import DetailSwiper from './childComps/DetailSwiper.vue'
+  import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue'
+  import DetailParamInfo from './childComps/DetailParamInfo.vue'
 
   import {
     getDetail,
     Goods,
-    Shop
+    Shop,
+    GoodsParam
   } from '@/network/detail'
-  import DetailSwiper from './childComps/DetailSwiper.vue'
 
 
   export default {
@@ -36,7 +42,9 @@
         iid: null,
         topImages: [],
         goods: {},
-        shop: {}
+        shop: {},
+        detailInfo:{},
+        paramInfo:{}
       }
     },
     components: {
@@ -44,7 +52,9 @@
       DetailSwiper,
       DetailBaseInfo,
       DetailShopInfo,
-      Scroll
+      Scroll,
+      DetailGoodsInfo,
+      DetailParamInfo
     },
     created() {
       //  1.保存传入的iid
@@ -59,6 +69,11 @@
         this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
         //③ 商家信息（店铺）
         this.shop = new Shop(data.shopInfo)
+        //④ 获取商品图片信息等
+        this.detailInfo=data.detailInfo
+        //⑤ 获取参数的信息
+        this.paramInfo = new GoodsParam(data.itemParams.info,data.itemParams.rule)
+
         console.log(this.shop);
       })
 
@@ -66,7 +81,11 @@
     // mounted () {},
     computed: {},
     watch: {},
-    methods: {}
+    methods: {
+      imageLoad(){
+          this.$refs.scrollRef.refresh()
+      }
+    }
   }
 </script>
 

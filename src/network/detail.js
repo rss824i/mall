@@ -38,6 +38,15 @@ export class Goods {
       }
   }
 
+  export class GoodsParam {
+    constructor(info, rule) {
+      // 注：images可能没有值(某些商品优质，某些没有值)
+      this.image = info.images ? info.images[0] : '';
+      this.infos = info.set;
+      this.sizes = rule.tables;
+    }
+  }
+
 /*
 class Person{
     constructor(name,age){
