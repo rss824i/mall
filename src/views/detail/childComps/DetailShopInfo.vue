@@ -53,7 +53,7 @@ export default {
   },
   computed: {
     sellsCount () {
-      const value = this.shop.sells+1111111
+      const value = this.shop.sells
       if(value < 10000) return value;
       else return parseInt(value/10000) + '万'
     }

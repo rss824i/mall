@@ -54,7 +54,7 @@
     getHomeMutidate,
     getHomeGoods
   } from '@/network/home'
-  import {debounce} from '@/common/utlis'
+  import {debounce} from '@/common/utils'
 
   export default {
     name: "Home",
@@ -216,7 +216,7 @@
     deactivated(){
       this.saveY=this.$refs.scrollref.getScrollY()
       console.log("记录位置：",this.saveY);
-    }
+    },
 
   }
 </script>

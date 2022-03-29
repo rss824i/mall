@@ -13,6 +13,8 @@
       <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad"/>
       <!-- 尺码参数的信息 -->
       <detail-param-info :paramInfo="paramInfo"/>
+      <!-- 评论信息 -->
+      <detail-comment-info :commentInfo="commentInfo"/>
     </scroll>
   </div>
 </template>
@@ -26,6 +28,7 @@
   import DetailSwiper from './childComps/DetailSwiper.vue'
   import DetailGoodsInfo from './childComps/DetailGoodsInfo.vue'
   import DetailParamInfo from './childComps/DetailParamInfo.vue'
+  import DetailCommentInfo from './childComps/DetailCommentInfo.vue'
 
   import {
     getDetail,
@@ -44,7 +47,8 @@
         goods: {},
         shop: {},
         detailInfo:{},
-        paramInfo:{}
+        paramInfo:{},
+        commentInfo:{}
       }
     },
     components: {
@@ -54,7 +58,8 @@
       DetailShopInfo,
       Scroll,
       DetailGoodsInfo,
-      DetailParamInfo
+      DetailParamInfo,
+      DetailCommentInfo
     },
     created() {
       //  1.保存传入的iid
@@ -64,7 +69,7 @@
       getDetail(this.iid).then(res => {
         const data = res.result;
         //① 获取顶部图片（轮播图）
-        this.topImages = data.itemInfo.topImages;
+        this.topImages = data.itemInfo.topImages
         //② 获取商品信息
         this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
         //③ 商家信息（店铺）
@@ -73,8 +78,11 @@
         this.detailInfo=data.detailInfo
         //⑤ 获取参数的信息
         this.paramInfo = new GoodsParam(data.itemParams.info,data.itemParams.rule)
-
-        console.log(this.shop);
+        //⑥ 获取评论信息
+        if(data.rate.cRate !== 0){
+          this.commentInfo = data.rate.list[0];
+        }
+        console.log(this.commentInfo);
       })
 
     },
