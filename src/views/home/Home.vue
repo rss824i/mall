@@ -55,6 +55,7 @@
     getHomeGoods
   } from '@/network/home'
   import {debounce} from '@/common/utils'
+  import {mixinTest} from '@/common/mixin'
 
   export default {
     name: "Home",
@@ -85,7 +86,7 @@
         // tab-control是否吸顶
         isTabFixed: false,
         // 保存离开页面时候的位置
-        saveY:0
+        saveY:0,
       }
     },
     components: {
@@ -99,6 +100,7 @@
       Scroll,
       BackTop
     },
+    mixins: [mixinTest],
     // 组件创建完成后请求数据
     created() {
       // 1.请求多个数据,由于方法名一样，不加this调用的是home.js中的方法
@@ -193,7 +195,7 @@
       // 1. 图片加载完成的时间监听（使用了防抖函数）
       const refresh = debounce(this.$refs.scrollref.refresh,100)
       // 监听goods  item中图片加载完成
-      this.$bus.$on('itemImageLoad',()=>{
+      this.$bus.$on('homeItemImageLoad',()=>{
         // console.log("加载图片 -home"); 
         //  this.$refs.scrollref &&  this.$refs.scrollref.refresh(); //会频繁调用
         refresh()  //执行函数
@@ -210,12 +212,16 @@
       this.$refs.scrollref.scrollTo(0,this.saveY,0)
       // 重新计算一次高度，处理切换回来不能滚动问题
       this.$refs.scrollref.refresh()
-      console.log("回到位置：",this.saveY);
+      // console.log("回到位置：",this.saveY);
     },
     // 进入不活跃时执行
     deactivated(){
+      // 1.保存y值
       this.saveY=this.$refs.scrollref.getScrollY()
-      console.log("记录位置：",this.saveY);
+      // console.log("记录位置：",this.saveY);
+
+      //2.取消全局事件的监听
+      this.$bus.$off()
     },
 
   }

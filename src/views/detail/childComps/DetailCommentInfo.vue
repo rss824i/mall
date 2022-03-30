@@ -29,9 +29,6 @@
       </div>
     </div>
   </div>
-  <div v-else>
-    <button @click="btn">1</button>
-  </div>
 </template>
 
 <script>
@@ -51,14 +48,10 @@ export default {
       // 1.将时间戳转化成Date对象
       const date = new Date( this.commentInfo.created * 1000)
       // 
-      return formatDate(date, 'yyyy-MM-dd')
+      return formatDate(date, 'yyyy-MM-dd hh:mm')
     }
   },
   methods:{
-    btn(){
-      const aa = this.commentInfo !== null && this.commentInfo.images !== undefined
-      console.log(aa);
-    }
   }
 };
 </script>

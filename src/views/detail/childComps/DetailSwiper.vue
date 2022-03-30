@@ -1,7 +1,7 @@
 <template>
   <!-- 详情轮播图 -->
     <swiper class="detaile-swiper">
-      <swiper-item class="swiper-item" v-for="item in topImages">
+      <swiper-item class="swiper-item" v-for="(item,index) in topImages" :key="index">
         <img :src="item">
       </swiper-item>
     </swiper>

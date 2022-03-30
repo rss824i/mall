@@ -1,5 +1,5 @@
 import { request } from "./request"
-
+// 通过ID获取详情数据
 export  function getDetail(iid){
     return request({
         url: '/detail',
@@ -8,9 +8,15 @@ export  function getDetail(iid){
         }
     })
 }
+// 获取推荐数据
+export function getRecommend () {
+  return request({
+    url: '/recommend'
+  })
+}
 
 //导出一个对象   
-//构建一个详情页面的对象
+//构建一个详情页面的对象实体
 export class Goods {
     // 构造函数
     constructor(itemInfo, columns, services) {
@@ -26,7 +32,7 @@ export class Goods {
 
   }
 
-//   商家信息
+//   商家信息实体
   export class Shop{
       constructor(shopInfo){
           this.logo = shopInfo.shopLogo;
@@ -38,6 +44,7 @@ export class Goods {
       }
   }
 
+  // 参数的信息实体
   export class GoodsParam {
     constructor(info, rule) {
       // 注：images可能没有值(某些商品优质，某些没有值)
