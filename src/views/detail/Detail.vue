@@ -1,8 +1,8 @@
 <template>
   <div id="detail">
       <!-- 导航栏 -->
-    <detail-nav-bar class="detail-nav" />
-    <scroll class="content" ref="scrollRef">
+    <detail-nav-bar class="detail-nav"  ref="nav" @titleClick="titleClick"/>
+    <scroll class="content" ref="scrollRef" @scrollOn1="contentScroll" :probeType="3">
       <!-- 轮播图 -->
       <detail-swiper :topImages="topImages" />
       <!-- 商品信息 -->
@@ -12,11 +12,11 @@
       <!-- 商品图片信息等 -->
       <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad" />
       <!-- 尺码参数的信息 -->
-      <detail-param-info :paramInfo="paramInfo" />
+      <detail-param-info ref="params"  :paramInfo="paramInfo" />
       <!-- 评论信息 -->
-      <detail-comment-info :commentInfo="commentInfo" />
+      <detail-comment-info ref="comment" :commentInfo="commentInfo" />
       <!-- 推荐数据 -->
-      <goods-list :goodsList="recommends" />
+      <goods-list ref="recommend" :goodsList="recommends" />
     </scroll>
   </div>
 </template>
@@ -56,7 +56,10 @@
         detailInfo: {},
         paramInfo: {},
         commentInfo: {},
-        recommends: []
+        recommends: [],
+        themeTopYs:[],
+        getThemeTopY:null,
+        currentIndex:0
       }
     },
     components: {
@@ -92,19 +95,67 @@
           this.commentInfo = data.rate.list[0];
         }
         // console.log(this.commentInfo);
-      })
+
+       /*
+        // nextTick 根据最新的数据，对应的dom已经被渲染出来了，但是图片没加载出来（高度不包含图片）
+        this.$nextTick(()=>{
+          this.themeTopYs =[]
+          this.themeTopYs.push(0);
+          this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+          this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+          console.log(this.themeTopYs);
+        })
+        */
+     
+     })
 
       // 3.请求推荐数据
       getRecommend().then(res => {
-        console.log(res);
+        // console.log(res);
         this.recommends = res.data.list
       })
+
+      // 4.给getThemeTopY 赋值(对themeTopYs赋值的操作进行防抖处理)
+      this.getThemeTopY = debounce(()=>{
+          this.themeTopYs =[]
+          this.themeTopYs.push(0);
+          this.themeTopYs.push(this.$refs.params.$el.offsetTop-44);
+          this.themeTopYs.push(this.$refs.comment.$el.offsetTop-44);
+          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop-44);
+          console.log(this.themeTopYs);
+      },300)
     },
     computed: {},
     watch: {},
     methods: {
       imageLoad() {
+        // 加载商品图片后计算高度
         this.$refs.scrollRef.refresh()
+        // 计算navbar中每一项的高度
+        this.getThemeTopY()
+      },
+      titleClick(index){
+        this.$refs.scrollRef.scrollTo(0,-this.themeTopYs[index],1000)
+      },
+      contentScroll(position){
+        // 1.获取y值
+        const  positionY = -position.y
+        // 2.positionY和主题中的值对比
+        let length = this.themeTopYs.length
+        for(let i in this.themeTopYs){
+          // 这里i是个String
+          i = parseInt(i)
+          if(this.currentIndex!==i && ((i < length - 1 
+          &&  positionY >= this.themeTopYs[i] 
+          && positionY < this.themeTopYs[i+1]) ||
+          (i === length - 1 && positionY >= this.themeTopYs[i] ))){
+            this.currentIndex =i
+            // console.log(this.currentIndex);
+            // 将值赋给nav中的currentIndex
+            this.$refs.nav.currentIndex=this.currentIndex
+          }
+        }
       }
     },
     mounted() {
@@ -114,6 +165,10 @@
         // console.log("加载图片 -detail"); 
         refresh() //执行函数
       })
+    },
+    // 数据更新后会执行
+    updated(){
+
     }
 
   }

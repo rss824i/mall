@@ -3,6 +3,6 @@
 export const mixinTest = {
     // data、methods等等都可以混入
     mounted(){
-        console.log("混入类容-mixin");
+        // console.log("混入类容-mixin");
     }
 }
