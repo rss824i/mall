@@ -48,7 +48,7 @@
          display: flex;
          /* 文字居中 */
          text-align: center;
-         font-size: 15px;
+         font-size: 14px;
          height: 40px;
          line-height: 40px;
          background-color: #fff;

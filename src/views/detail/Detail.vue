@@ -1,7 +1,7 @@
 <template>
   <div id="detail">
-      <!-- 导航栏 -->
-    <detail-nav-bar class="detail-nav"  ref="nav" @titleClick="titleClick"/>
+    <!-- 导航栏 -->
+    <detail-nav-bar class="detail-nav" ref="nav" @titleClick="titleClick" />
     <scroll class="content" ref="scrollRef" @scrollOn1="contentScroll" :probeType="3">
       <!-- 轮播图 -->
       <detail-swiper :topImages="topImages" />
@@ -12,17 +12,22 @@
       <!-- 商品图片信息等 -->
       <detail-goods-info :detailInfo="detailInfo" @imageLoad="imageLoad" />
       <!-- 尺码参数的信息 -->
-      <detail-param-info ref="params"  :paramInfo="paramInfo" />
+      <detail-param-info ref="params" :paramInfo="paramInfo" />
       <!-- 评论信息 -->
       <detail-comment-info ref="comment" :commentInfo="commentInfo" />
       <!-- 推荐数据 -->
       <goods-list ref="recommend" :goodsList="recommends" />
     </scroll>
+    <!--回到顶部： 监听组件的原生事件时需要添加native才能监听-->
+    <back-top @click.native='backClick' v-show="backTopIsShow"></back-top>
+    <detail-bottom-bar></detail-bottom-bar>
   </div>
 </template>
 
 <script>
   import Scroll from '@/components/common/scroll/scroll.vue'
+  import BackTop from 'components/content/backTop/BackTop.vue'
+
 
   import DetailNavBar from './childComps/DetailNavBar.vue'
   import DetailBaseInfo from './childComps/DetailBaseInfo.vue'
@@ -32,6 +37,9 @@
   import DetailParamInfo from './childComps/DetailParamInfo.vue'
   import DetailCommentInfo from './childComps/DetailCommentInfo.vue'
   import GoodsList from '@/components/content/goods/GoodsList.vue'
+  import DetailBottomBar from './childComps/DetailBottomBar.vue'
+
+
 
   import {
     getDetail,
@@ -50,6 +58,7 @@
     data() {
       return {
         iid: null,
+        backTopIsShow: false,
         topImages: [],
         goods: {},
         shop: {},
@@ -57,9 +66,9 @@
         paramInfo: {},
         commentInfo: {},
         recommends: [],
-        themeTopYs:[],
-        getThemeTopY:null,
-        currentIndex:0
+        themeTopYs: [],
+        getThemeTopY: null,
+        currentIndex: 0
       }
     },
     components: {
@@ -71,7 +80,9 @@
       DetailGoodsInfo,
       DetailParamInfo,
       DetailCommentInfo,
-      GoodsList
+      GoodsList,
+      DetailBottomBar,
+      BackTop
     },
     created() {
       //  1.保存传入的iid
@@ -96,19 +107,19 @@
         }
         // console.log(this.commentInfo);
 
-       /*
-        // nextTick 根据最新的数据，对应的dom已经被渲染出来了，但是图片没加载出来（高度不包含图片）
-        this.$nextTick(()=>{
-          this.themeTopYs =[]
-          this.themeTopYs.push(0);
-          this.themeTopYs.push(this.$refs.params.$el.offsetTop);
-          this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
-          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
-          console.log(this.themeTopYs);
-        })
-        */
-     
-     })
+        /*
+         // nextTick 根据最新的数据，对应的dom已经被渲染出来了，但是图片没加载出来（高度不包含图片）
+         this.$nextTick(()=>{
+           this.themeTopYs =[]
+           this.themeTopYs.push(0);
+           this.themeTopYs.push(this.$refs.params.$el.offsetTop);
+           this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+           this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+           console.log(this.themeTopYs);
+         })
+         */
+
+      })
 
       // 3.请求推荐数据
       getRecommend().then(res => {
@@ -117,14 +128,14 @@
       })
 
       // 4.给getThemeTopY 赋值(对themeTopYs赋值的操作进行防抖处理)
-      this.getThemeTopY = debounce(()=>{
-          this.themeTopYs =[]
-          this.themeTopYs.push(0);
-          this.themeTopYs.push(this.$refs.params.$el.offsetTop-44);
-          this.themeTopYs.push(this.$refs.comment.$el.offsetTop-44);
-          this.themeTopYs.push(this.$refs.recommend.$el.offsetTop-44);
-          console.log(this.themeTopYs);
-      },300)
+      this.getThemeTopY = debounce(() => {
+        this.themeTopYs = []
+        this.themeTopYs.push(0);
+        this.themeTopYs.push(this.$refs.params.$el.offsetTop - 44);
+        this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44);
+        this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44);
+        console.log(this.themeTopYs);
+      }, 300)
     },
     computed: {},
     watch: {},
@@ -135,28 +146,42 @@
         // 计算navbar中每一项的高度
         this.getThemeTopY()
       },
-      titleClick(index){
-        this.$refs.scrollRef.scrollTo(0,-this.themeTopYs[index],1000)
+      titleClick(index) {
+        this.$refs.scrollRef.scrollTo(0, -this.themeTopYs[index], 1000)
       },
-      contentScroll(position){
+      contentScroll(position) {
         // 1.获取y值
-        const  positionY = -position.y
+        const positionY = -position.y
         // 2.positionY和主题中的值对比
         let length = this.themeTopYs.length
-        for(let i in this.themeTopYs){
+        for (let i in this.themeTopYs) {
           // 这里i是个String
           i = parseInt(i)
-          if(this.currentIndex!==i && ((i < length - 1 
-          &&  positionY >= this.themeTopYs[i] 
-          && positionY < this.themeTopYs[i+1]) ||
-          (i === length - 1 && positionY >= this.themeTopYs[i] ))){
-            this.currentIndex =i
+          // this.currentIndex!==i 防止赋值过于频繁
+          if (this.currentIndex !== i && ((i < length - 1 &&
+                positionY >= this.themeTopYs[i] &&
+                positionY < this.themeTopYs[i + 1]) ||
+              (i === length - 1 && positionY >= this.themeTopYs[i]))) {
+            this.currentIndex = i
             // console.log(this.currentIndex);
             // 将值赋给nav中的currentIndex
-            this.$refs.nav.currentIndex=this.currentIndex
+            this.$refs.nav.currentIndex = this.currentIndex
           }
         }
-      }
+
+        // 回到顶部是否显示： 滚动位置大于1000时显示
+        this.backTopIsShow = (positionY) > 1000
+        
+      },
+      // 监听回到顶部（bakcTop）组件的点击
+      backClick() {
+        console.log("组件点击");
+        // 可以通过ref拿到组件对象，且可以使用其中的属性、方法等
+        // console.log( this.$refs.scrollref.message);
+
+        // 调用scroll回到顶部函数  在2000毫秒内 // this.scroll && =>scroll存在时再执行后面的代码
+        this.$refs.scrollRef && this.$refs.scrollRef.scrollTo(0, 0, 2000)
+      },
     },
     mounted() {
       const refresh = debounce(this.$refs.scrollRef.refresh, 100)
@@ -167,7 +192,7 @@
       })
     },
     // 数据更新后会执行
-    updated(){
+    updated() {
 
     }
 
@@ -191,7 +216,7 @@
 
   .content {
     /* 计算高度 */
-    height: calc(100% - 44px);
+    height: calc(100% - 44px - 53px);
     overflow: hidden;
   }
 </style>
