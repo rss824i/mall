@@ -221,7 +221,7 @@
       // console.log("记录位置：",this.saveY);
 
       //2.取消全局事件的监听
-      this.$bus.$off()
+      // this.$bus.$off()
     },
 
   }

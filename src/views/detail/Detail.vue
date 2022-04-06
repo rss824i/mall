@@ -26,7 +26,6 @@
 
 <script>
   import Scroll from '@/components/common/scroll/scroll.vue'
-  import BackTop from 'components/content/backTop/BackTop.vue'
 
 
   import DetailNavBar from './childComps/DetailNavBar.vue'
@@ -58,7 +57,6 @@
     data() {
       return {
         iid: null,
-        backTopIsShow: false,
         topImages: [],
         goods: {},
         shop: {},
@@ -68,7 +66,7 @@
         recommends: [],
         themeTopYs: [],
         getThemeTopY: null,
-        currentIndex: 0
+        currentIndex: 0,
       }
     },
     components: {
@@ -82,7 +80,6 @@
       DetailCommentInfo,
       GoodsList,
       DetailBottomBar,
-      BackTop
     },
     created() {
       //  1.保存传入的iid
@@ -173,15 +170,7 @@
         this.backTopIsShow = (positionY) > 1000
         
       },
-      // 监听回到顶部（bakcTop）组件的点击
-      backClick() {
-        console.log("组件点击");
-        // 可以通过ref拿到组件对象，且可以使用其中的属性、方法等
-        // console.log( this.$refs.scrollref.message);
 
-        // 调用scroll回到顶部函数  在2000毫秒内 // this.scroll && =>scroll存在时再执行后面的代码
-        this.$refs.scrollRef && this.$refs.scrollRef.scrollTo(0, 0, 2000)
-      },
     },
     mounted() {
       const refresh = debounce(this.$refs.scrollRef.refresh, 100)

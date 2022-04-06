@@ -16,6 +16,7 @@
     .nav-bar {
         /* flex布局 */
         display: flex;  
+        width: 100%;
         height: 44px;
         /* 高度 */
         line-height: 44px;
