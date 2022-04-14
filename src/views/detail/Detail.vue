@@ -50,10 +50,13 @@
   import {
     debounce
   } from '@/common/utils'
-
+  import {
+    backTopMixin
+  } from '@/common/mixin'
 
   export default {
     name: 'Detail',
+    mixins: [backTopMixin],
     data() {
       return {
         iid: null,
@@ -64,7 +67,7 @@
         paramInfo: {},
         commentInfo: {},
         recommends: [],
-        themeTopYs: [],
+        themeTopYs: [],//保存商品、参数、评论、推荐的位置
         getThemeTopY: null,
         currentIndex: 0,
       }
@@ -131,7 +134,7 @@
         this.themeTopYs.push(this.$refs.params.$el.offsetTop - 44);
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44);
-        console.log(this.themeTopYs);
+        // console.log(this.themeTopYs);
       }, 300)
     },
     computed: {},
@@ -146,6 +149,7 @@
       titleClick(index) {
         this.$refs.scrollRef.scrollTo(0, -this.themeTopYs[index], 1000)
       },
+      // 监听滚动位置
       contentScroll(position) {
         // 1.获取y值
         const positionY = -position.y
@@ -168,9 +172,9 @@
 
         // 回到顶部是否显示： 滚动位置大于1000时显示
         this.backTopIsShow = (positionY) > 1000
-        
+
       },
-      
+
     },
     mounted() {
       const refresh = debounce(this.$refs.scrollRef.refresh, 100)

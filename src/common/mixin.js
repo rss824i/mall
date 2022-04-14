@@ -7,7 +7,7 @@ export const mixinTest = {
   }
 }
 
-import BackTop from 'components/content/backTop/BackTop.vue'
+import BackTop from '@/components/content/backTop/BackTop.vue'
 
 export const backTopMixin = {
     components: {

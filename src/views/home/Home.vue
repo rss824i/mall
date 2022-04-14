@@ -43,7 +43,7 @@
   import NavBar from 'components/common/navbar/NavBar.vue'
   import TabControl from '@/components/content/tabControl/TabControl.vue'
   import Scroll from 'components/common/scroll/scroll'
-  import BackTop from 'components/content/backTop/BackTop'
+  // import BackTop from 'components/content/backTop/BackTop'
 
   import HomeSwiper from 'views/home/childComps/HomeSwiper.vue'
   import HomeRecommendView from 'views/home/childComps/HomeRecommendView'
@@ -55,10 +55,11 @@
     getHomeGoods
   } from '@/network/home'
   import {debounce} from '@/common/utils'
-  import {mixinTest} from '@/common/mixin'
+  import {mixinTest,backTopMixin} from '@/common/mixin'
 
   export default {
     name: "Home",
+    mixins: [mixinTest,backTopMixin],
     data() {
       return {
         banners: [],
@@ -98,9 +99,9 @@
       FeatureView,
       GoodsList,
       Scroll,
-      BackTop
+      // BackTop
     },
-    mixins: [mixinTest],
+  
     // 组件创建完成后请求数据
     created() {
       // 1.请求多个数据,由于方法名一样，不加this调用的是home.js中的方法
@@ -132,6 +133,8 @@
         this.$refs.tabControl1.currentIndex=index
         this.$refs.tabControl2.currentIndex=index
       },
+      /*
+      // 使用混入完成以下部分
       // 监听回到顶部（bakcTop）组件的点击
       backClick(){
         // console.log("组件点击");
@@ -140,7 +143,7 @@
 
         // 调用scroll回到顶部函数  在2000毫秒内 // this.scroll && =>scroll存在时再执行后面的代码
         this.$refs.scrollref &&  this.$refs.scrollref.scrollTo(0,0,2000)
-      },
+      },*/
       contentScroll(position){
         // 回到顶部是否显示： 滚动位置大于1000时显示
         // console.log(position.y);
