@@ -74,6 +74,7 @@
       scrollTo(x, y, time = 300) {
         // scrollTo 回到顶部 参数1 x ; 参数2 y ；参数3 多少毫秒内返回到指定位置，
         this.scroll.scrollTo(x, y, time)
+        console.log("回到位置：y="+y+"  x="+x);
       },
       //  可再次上拉加载
       finishPullUp() {

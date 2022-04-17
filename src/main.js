@@ -3,7 +3,7 @@ import Es6Promise from 'es6-promise'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-
+import store from './store/index'
 
 Es6Promise.polyfill()
 /*
@@ -19,5 +19,7 @@ Vue.prototype.$bus = new Vue()
 
 new Vue({
   router,
-  render: function (h) { return h(App) },
+  store,
+  // render: function (h) { return h(App) },
+  render: h=>h(App),
 }).$mount('#app')

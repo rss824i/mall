@@ -20,7 +20,7 @@
     </scroll>
     <!--回到顶部： 监听组件的原生事件时需要添加native才能监听-->
     <back-top @click.native='backClick' v-show="backTopIsShow"></back-top>
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addToCart="addCart"></detail-bottom-bar>
   </div>
 </template>
 
@@ -174,7 +174,24 @@
         this.backTopIsShow = (positionY) > 1000
 
       },
+      // 监听点击加入购物车
+      addCart(){
+        console.log("加入购物车");
+        // 1.获取购物需要展示的信息
+        const product = {}
+        product.image = this.topImages[0];
+        product.title = this.goods.title;
+        product.desc =this.goods.desc;
+        product.price = this.goods.newPrice;
+        product.iid= this.iid;
+        product.realPrice= this.goods.realPrice;
 
+        // 2.将商品添加到购物车
+        // this.$store.cartList.push(product) //不推荐直接修改
+        // this.$store.commit('addCart',product) 
+        this.$store.dispatch('addCart',product)
+
+      }
     },
     mounted() {
       const refresh = debounce(this.$refs.scrollRef.refresh, 100)
