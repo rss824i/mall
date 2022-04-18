@@ -7,10 +7,10 @@
     </nav-bar>
 
     <!-- 商品列表 -->
-    <cart-list></cart-list>
+    <cart-list />
 
     <!-- 底部汇总 -->
-
+  <cart-bottom-bar></cart-bottom-bar>
     
   </div>
 </template>
@@ -18,6 +18,7 @@
 <script>
   import NavBar from '@/components/common/navbar/NavBar.vue'
   import CartList from './childComps/CartList.vue'
+  import CartBottomBar from './childComps/CartBottomBar.vue'
   // 导入vuex中的getters
   import {
     mapGetters
@@ -27,7 +28,8 @@
     name: "Cart",
     components: {
       NavBar,
-      CartList
+      CartList,
+      CartBottomBar
     },
     // 计算属性
     computed: {

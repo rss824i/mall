@@ -1,6 +1,6 @@
 <template>
   <div class="cart-list">
-    <scroll class="content">
+    <scroll class="content" ref="scrollRef">
       <cart-list-item v-for="(item,index) in cartList" :key="index" :item-info="item"> </cart-list-item>
     </scroll>
   </div>
@@ -31,6 +31,9 @@
     computed: {
       ...mapGetters(['cartList'])
     },
+    activated(){
+      this.$refs.scrollRef.refresh()
+    },
     watch: {},
     methods: {}
   }
@@ -38,7 +41,7 @@
 
 <style scoped>
   .cart-list {
-    height: calc(100% - 44px - 49px);
+    height: calc(100% - 44px - 49px - 40px);
   }
 
   .content {

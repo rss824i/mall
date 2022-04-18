@@ -1,7 +1,8 @@
 <template>
   <div id="shop-item">
     <div class="item-selector">
-      <!-- <check-button :is-checked="itemInfo.checked" @click="checkClick"/> -->
+      <!-- 父组件中引入子组件的时候，当要触发子组件点击事件的时候@click 不生效 需要加上native -->
+      <check-button :is-checked="itemInfo.checked" @click.native="checkClick"/>
     </div>
     <div class="item-img">
       <img :src="itemInfo.image" alt="商品图片" />
@@ -18,9 +19,9 @@
 </template>
 
 <script>
-  // import CheckButton from '../../../components/content/checkButton/CheckButton';
+  import CheckButton from '../../../components/content/checkButton/CheckButton';
   export default {
-    // components: { CheckButton },
+    components: { CheckButton },
     name: "CartListItem",
     props: {
       itemInfo: {
@@ -32,7 +33,8 @@
     },
     methods: {
       checkClick() {
-        this.$store.commit('checkClick', this.itemInfo.iid)
+        this.itemInfo.checked=!this.itemInfo.checked
+        // this.$store.commit('checkClick', this.itemInfo.iid)
       }
     }
   };
@@ -48,7 +50,8 @@
   }
 
   .item-selector {
-    width: 14%;
+    /* width: 14%; */
+    width: 20px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -183,9 +183,9 @@
         product.title = this.goods.title;
         product.desc =this.goods.desc;
         product.price = this.goods.newPrice;
-        product.iid= this.iid;
-        product.realPrice= this.goods.realPrice;
-
+        product.iid = this.iid;
+        product.realPrice = this.goods.realPrice;
+        // product.checked =true //购物车默认选中状态（在保存至vuex中添加选中）
         // 2.将商品添加到购物车
         // this.$store.cartList.push(product) //不推荐直接修改
         // this.$store.commit('addCart',product) 

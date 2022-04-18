@@ -23,19 +23,21 @@
     },
     methods: {
       start() {
-        var i = 0;
-        i = i * 1;
-        //在mounted 声明周期中创建定时器
-        this.timer = setInterval(() => {
-          // 这里调用调用需要执行的方法，1为自定义的参数，由于特殊的需求它将用来区分，定时器调用和手工调用，然后执行不同的业务逻辑
-          this.shouMsg = this.msg.substring(0, i)
-          i++
-          if (i === this.msg.length + 1) {
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-          console.log(this.shouMsg);
-        }, 200) // 每两秒执行1次
+        if (this.shouMsg.length === 0 || this.shouMsg.length === this.msg.length) {``
+          var i = 0;
+          i = i * 1;
+          //在mounted 声明周期中创建定时器
+          this.timer = setInterval(() => {
+            // 这里调用调用需要执行的方法，1为自定义的参数，由于特殊的需求它将用来区分，定时器调用和手工调用，然后执行不同的业务逻辑
+            this.shouMsg = this.msg.substring(0, i)
+            i++
+            if (i === this.msg.length + 1) {
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+            console.log(this.shouMsg);
+          }, 200) // 每两秒执行1次
+        }
       },
       stop() {
         clearInterval(this.timer);
