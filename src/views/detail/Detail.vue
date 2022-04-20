@@ -22,6 +22,7 @@
     <back-top @click.native='backClick' v-show="backTopIsShow"></back-top>
     <!-- 底部功能  客服 店铺 收藏 加入购物车 -->
     <detail-bottom-bar @addToCart="addCart"></detail-bottom-bar>
+    <!-- <toast :message="message" :show="show"></toast> -->
   </div>
 </template>
 
@@ -57,6 +58,9 @@
 // 类似mapGetters
 import { mapActions } from 'vuex'
 
+
+// import Toast from '@/components/common/toast/Toast'
+
   export default {
     name: 'Detail',
     mixins: [backTopMixin],
@@ -73,6 +77,8 @@ import { mapActions } from 'vuex'
         themeTopYs: [],//保存商品、参数、评论、推荐的位置
         getThemeTopY: null,
         currentIndex: 0,
+        // message:'',
+        // show:false
       }
     },
     components: {
@@ -86,6 +92,7 @@ import { mapActions } from 'vuex'
       DetailCommentInfo,
       GoodsList,
       DetailBottomBar,
+      // Toast
     },
     created() {
       //  1.保存传入的iid
@@ -206,6 +213,13 @@ import { mapActions } from 'vuex'
          this.add(product).then(res=>{
            // 3.添加成功提示
           console.log(res);
+/*           this.show=true
+          this.message=res
+          setTimeout(()=>{
+            this.show=false
+            this.message=''
+          },1500) */
+          this.$toast.show(res,1500)
         }) 
 
        
