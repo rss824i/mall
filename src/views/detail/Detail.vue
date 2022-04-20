@@ -20,9 +20,7 @@
     </scroll>
     <!--回到顶部： 监听组件的原生事件时需要添加native才能监听-->
     <back-top @click.native='backClick' v-show="backTopIsShow"></back-top>
-    <!-- 底部功能  客服 店铺 收藏 加入购物车 -->
     <detail-bottom-bar @addToCart="addCart"></detail-bottom-bar>
-    <!-- <toast :message="message" :show="show"></toast> -->
   </div>
 </template>
 
@@ -55,11 +53,8 @@
   import {
     backTopMixin
   } from '@/common/mixin'
-// 类似mapGetters
-import { mapActions } from 'vuex'
-
-
-// import Toast from '@/components/common/toast/Toast'
+//类似是mapGetters
+  import{mapActions} from 'vuex'
 
   export default {
     name: 'Detail',
@@ -77,8 +72,6 @@ import { mapActions } from 'vuex'
         themeTopYs: [],//保存商品、参数、评论、推荐的位置
         getThemeTopY: null,
         currentIndex: 0,
-        // message:'',
-        // show:false
       }
     },
     components: {
@@ -92,7 +85,6 @@ import { mapActions } from 'vuex'
       DetailCommentInfo,
       GoodsList,
       DetailBottomBar,
-      // Toast
     },
     created() {
       //  1.保存传入的iid
@@ -150,8 +142,9 @@ import { mapActions } from 'vuex'
     computed: {},
     watch: {},
     methods: {
+      //类似是mapGetters
       ...mapActions({
-        add:"addCart"
+        add:'addCart'
       }),
       imageLoad() {
         // 加载商品图片后计算高度
@@ -190,39 +183,25 @@ import { mapActions } from 'vuex'
       // 监听点击加入购物车
       addCart(){
         // console.log("加入购物车");
-        
         // 1.获取购物需要展示的信息
         const product = {}
-        product.image = this.topImages[0]; 
+        product.image = this.topImages[0];
         product.title = this.goods.title;
         product.desc =this.goods.desc;
         product.price = this.goods.newPrice;
         product.iid = this.iid;
         product.realPrice = this.goods.realPrice;
         // product.isChecked =true //购物车默认选中状态（在保存至vuex中添加选中）
-
-        // 2.将商品添加到购物车（保存到vuex中）
+        // 2.将商品添加到购物车
         // this.$store.cartList.push(product) //不推荐直接修改
         // this.$store.commit('addCart',product) 
-       /*        
-        this.$store.dispatch('addCart',product) .then(res=>{
-           // 3.添加成功提示
-          console.log(res);
-        }) 
-        */
-         this.add(product).then(res=>{
-           // 3.添加成功提示
-          console.log(res);
-/*           this.show=true
-          this.message=res
-          setTimeout(()=>{
-            this.show=false
-            this.message=''
-          },1500) */
-          this.$toast.show(res,1500)
-        }) 
 
-       
+        // this.$store.dispatch('addCart',product).then(res=>{
+        this.add(product).then(res=>{
+          // 显示提示信息
+           this.$toast.show(res,1500)
+        })
+
       }
     },
     mounted() {

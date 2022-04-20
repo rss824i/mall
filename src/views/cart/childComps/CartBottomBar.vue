@@ -68,10 +68,10 @@
       },
       calcClick(){
         if(this.cartList.length===0){
-          this.$toast.show('购物车为空哦')
+          this.$toast.show('什么也没有噢')
           return
         }
-        if(!this.isSelectAll){
+        if(this.checkLength===0){
           this.$toast.show('请选择结算商品',2000)
         }else{
           this.$toast.show('结算功能待开发~~')
