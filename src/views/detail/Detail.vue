@@ -213,12 +213,14 @@ import { mapActions } from 'vuex'
          this.add(product).then(res=>{
            // 3.添加成功提示、购物车添加成功
           // console.log(res);
-/*           this.show=true
+          /*
+          this.show=true
           this.message=res
           setTimeout(()=>{
             this.show=false
             this.message=''
-          },1500) */
+          },1500) 
+          */
           this.$toast.show(res,1500)
 
         }) 
