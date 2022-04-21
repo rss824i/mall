@@ -211,8 +211,8 @@ import { mapActions } from 'vuex'
         }) 
         */
          this.add(product).then(res=>{
-           // 3.添加成功提示
-          console.log(res);
+           // 3.添加成功提示、购物车添加成功
+          // console.log(res);
 /*           this.show=true
           this.message=res
           setTimeout(()=>{
@@ -220,6 +220,7 @@ import { mapActions } from 'vuex'
             this.message=''
           },1500) */
           this.$toast.show(res,1500)
+
         }) 
 
        
