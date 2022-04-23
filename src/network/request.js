@@ -9,7 +9,6 @@ export function request(config) {
 
   // 请求拦截器  可在发出请求前对请求做设置
   instance.interceptors.request.use(config => {
-    // 需要返回，否则实际发出的请求config为空
     return config
   }, err => {
     console.log(err)

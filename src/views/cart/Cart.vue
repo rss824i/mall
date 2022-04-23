@@ -2,7 +2,6 @@
   <div id='cart'>
     <!-- 导航 -->
     <nav-bar class="nav-bar">
-      <!-- <div slot="center">购物车（{{cartLength}}）</div> -->
       <div slot="center">购物车（{{length}}）</div>
     </nav-bar>
 
@@ -33,13 +32,8 @@
     },
     // 计算属性
     computed: {
-      // 会将vuex中的getters中的内容进行解构,将需要用的Get拿出来
-      //方式一
-      // ...mapGetters(['cartLength','cartList']) 
-      // 方式二
       ...mapGetters({
         length: 'cartLength',
-        // list: 'cartList'
       })
     }
   }

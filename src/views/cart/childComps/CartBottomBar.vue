@@ -31,35 +31,27 @@
     created() {},
     // mounted () {},
     computed: {
-      ...mapGetters(['cartList']), //下面就可以直接用cartList
-      // 计算合计的价格
+      ...mapGetters(['cartList']), 
       totalPrice() {
-        //  return this.$store.getters.cartList  //可从getters中取
-        //  return this.$store.state.cartList //也可以从state中取
-        return "￥" + this.$store.state.cartList.filter(item => { //遍历
+        return "￥" + this.$store.state.cartList.filter(item => {  
           return item.checked
-        }).reduce((preValue, item) => { //汇总
-          return preValue + item.realPrice * item.count //preValue 前一次的值
-        }, 0).toFixed(2) //保留两位小数
+        }).reduce((preValue, item) => {  
+          return preValue + item.realPrice * item.count 
+        }, 0).toFixed(2)  
       },
       // 选中的商品数量
       checkLength() {
-        // return  this.$store.getters.cartList.filter(item => item.checked).length
         return this.cartList.filter(item => item.checked).length
       },
       // 选中按钮是否为选中状态（全选）
       isSelectAll(){
-        // console.log("isSelectAll");
-        //对0取反为true  非0为false
-        // return !(this.cartList.filter(item=>!item.checked).length) //不选中的数量  //filter遍历所有
        return this.cartList.length===0?false:!this.cartList.find(item=>!item.checked)//查找到一个为不选中的状态为止 //find 查找到匹配的值就直接返回
       }
     },
     watch: {},
     methods: {
       checkClick(){
-        // console.log("点击");
-        if(this.isSelectAll){ //全为选中
+        if(this.isSelectAll){  
           this.cartList.forEach(item => item.checked=false);
         }else{
            this.cartList.forEach(item => item.checked=true);

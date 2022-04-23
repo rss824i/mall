@@ -5,11 +5,6 @@ const obj = {}
 
 // 执行install时会默认传过来一个vue参数
 obj.install = function (vue) {
-    // console.log("执行obj.install",vue)
-    
-    //此方法失败,在执行install时Toast.$el为空
-    // document.body.appendChild(Toast.$el) 
-
     // 1.创建组件构造器
     const toastContrustor = Vue.extend(Toast)
 

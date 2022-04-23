@@ -23,7 +23,6 @@
         <table>
           <tr v-for="(item, index) in shop.score" :key="index">
             <td>{{ item.name }}</td>
-            <!-- 根据isBetter 动态绑定class  是否显示红色 -->
             <td class="score" :class="{ 'score-better': item.isBetter }">
               {{ item.score }}
             </td>

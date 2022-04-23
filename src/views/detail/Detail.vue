@@ -115,36 +115,21 @@ import { mapActions } from 'vuex'
         if (data.rate.cRate !== 0) {
           this.commentInfo = data.rate.list[0];
         }
-        // console.log(this.commentInfo);
 
-        /*
-         // nextTick 根据最新的数据，对应的dom已经被渲染出来了，但是图片没加载出来（高度不包含图片）
-         this.$nextTick(()=>{
-           this.themeTopYs =[]
-           this.themeTopYs.push(0);
-           this.themeTopYs.push(this.$refs.params.$el.offsetTop);
-           this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
-           this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
-           console.log(this.themeTopYs);
-         })
-         */
 
       })
 
       // 3.请求推荐数据
       getRecommend().then(res => {
-        // console.log(res);
         this.recommends = res.data.list
       })
 
-      // 4.给getThemeTopY 赋值(对themeTopYs赋值的操作进行防抖处理)
       this.getThemeTopY = debounce(() => {
         this.themeTopYs = []
         this.themeTopYs.push(0);
         this.themeTopYs.push(this.$refs.params.$el.offsetTop - 44);
         this.themeTopYs.push(this.$refs.comment.$el.offsetTop - 44);
         this.themeTopYs.push(this.$refs.recommend.$el.offsetTop - 44);
-        // console.log(this.themeTopYs);
       }, 300)
     },
     computed: {},
@@ -178,12 +163,10 @@ import { mapActions } from 'vuex'
               (i === length - 1 && positionY >= this.themeTopYs[i]))) {
             this.currentIndex = i
             // console.log(this.currentIndex);
-            // 将值赋给nav中的currentIndex
             this.$refs.nav.currentIndex = this.currentIndex
           }
         }
 
-        // 回到顶部是否显示： 滚动位置大于1000时显示
         this.backTopIsShow = (positionY) > 1000
 
       },
@@ -199,30 +182,9 @@ import { mapActions } from 'vuex'
         product.price = this.goods.newPrice;
         product.iid = this.iid;
         product.realPrice = this.goods.realPrice;
-        // product.isChecked =true //购物车默认选中状态（在保存至vuex中添加选中）
 
-        // 2.将商品添加到购物车（保存到vuex中）
-        // this.$store.cartList.push(product) //不推荐直接修改
-        // this.$store.commit('addCart',product) 
-       /*        
-        this.$store.dispatch('addCart',product) .then(res=>{
-           // 3.添加成功提示
-          console.log(res);
-        }) 
-        */
          this.add(product).then(res=>{
-           // 3.添加成功提示、购物车添加成功
-          // console.log(res);
-          /*
-          this.show=true
-          this.message=res
-          setTimeout(()=>{
-            this.show=false
-            this.message=''
-          },1500) 
-          */
           this.$toast.show(res,1500)
-
         }) 
 
        
@@ -230,9 +192,7 @@ import { mapActions } from 'vuex'
     },
     mounted() {
       const refresh = debounce(this.$refs.scrollRef.refresh, 100)
-      // 监听goods  item中图片加载完成
       this.$bus.$on('detailItemImageLoad', () => {
-        // console.log("加载图片 -detail"); 
         refresh() //执行函数
       })
     },

@@ -17,8 +17,6 @@ const state = {
 // 2.创建Store对象
 const store = new Vuex.Store({
   state: state,
-  // mutations唯一的目的就是修改state中的状态
-  // mutations原则 mutations中的每一个方法尽可能完成的时间比较单一一点（方便跟踪）
   mutations: mutations,
   actions,
   getters

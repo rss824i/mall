@@ -1,7 +1,6 @@
 <template>
   <div id="shop-item">
     <div class="item-selector">
-      <!-- 父组件中引入子组件的时候，当要触发子组件点击事件的时候@click 不生效 需要加上native -->
       <check-button :is-checked="itemInfo.checked" @click.native="checkClick"/>
     </div>
     <div class="item-img">
@@ -34,7 +33,6 @@
     methods: {
       checkClick() {
         this.itemInfo.checked=!this.itemInfo.checked
-        // this.$store.commit('checkClick', this.itemInfo.iid)
       }
     }
   };

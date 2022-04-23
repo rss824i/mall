@@ -16,11 +16,8 @@
 
 <style scoped>
     .back-top{
-        /* 定位 */
         position: fixed;
-        /* 右侧距离 */
         right: 10px;
-        /* 底部距离 */
         bottom: 50px;
     }
 

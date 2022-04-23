@@ -1,5 +1,4 @@
 <template>
-<!-- 判断commentInfo中存在Keys -->
    <div v-if="Object.keys(commentInfo).length !== 0"
             class="comment-info">
     <div class="info-header">
@@ -45,9 +44,7 @@ export default {
   },
   computed: {
     date() {
-      // 1.将时间戳转化成Date对象
       const date = new Date( this.commentInfo.created * 1000)
-      // 
       return formatDate(date, 'yyyy-MM-dd hh:mm')
     }
   },

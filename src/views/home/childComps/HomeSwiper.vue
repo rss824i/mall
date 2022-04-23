@@ -3,7 +3,6 @@
     <swiper>
       <swiper-item v-for="(item ,index) in banners" :key="index">
         <a :href="item.link">
-          <!-- @load 监听图片是否加载完成 -->
           <img :src="item.image" @load="imageLoad">
         </a>
       </swiper-item>

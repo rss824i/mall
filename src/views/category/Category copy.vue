@@ -118,20 +118,14 @@
     },
     // 组件创建完调用
     created() {
-      // 由于组件创建完，未挂载完
-      // this.bs = new BScroll('.content1', {})
     },
     mounted(){
-      // 使用BScroll 必须设置一个高度，且可滚动区域的子级元素只能有一个，子级的子级元素数量不限
       this.bs = new BScroll(document.querySelector(".content1"), {
-        // 监控滚动位置
         probeType:3,
-        // 打开上拉加载
         pullUpLoad: true
       })
 
       this.bs.on('scroll',(position)=>{
-          // 上拉加载位置
           console.log(position);
       })
 
@@ -151,10 +145,6 @@
   .content_ {
     height: 150px;
     background-color: red;
-    /* 原生局部滚动 */
-    /* 超出指定高度部分自动隐藏 */
-    /* overflow: hidden; */
-    /* 在y轴滚动，设置此属性后，会默认设置上面的这个属性 */
     overflow-y: scroll;
   }
 

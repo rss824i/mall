@@ -41,9 +41,7 @@ const routes=[
 ]
 
 const router = new Router({
-  // 名字不能变，否则需要使用routes:XXXX
   routes,
-  // 修改默认使用的模式，history可显示完整的路径
   mode: "history"
 })
 

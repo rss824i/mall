@@ -1,6 +1,5 @@
 <template>
 <!-- 有数据显示，无数据不显示  -->
-  <!-- Object.keys(obj).length===0 判断对象里是否有Key-->
   <div v-if="goods !== undefined && goods.columns !== undefined && goods.services !== undefined"
        class="base-info">
     <div class="info-title">{{goods.title}}</div>

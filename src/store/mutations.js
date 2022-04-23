@@ -1,4 +1,3 @@
-// 导入常量，mutations方法名常量
 import {
     ADD_COUNTER,
     ADD_TO_CART

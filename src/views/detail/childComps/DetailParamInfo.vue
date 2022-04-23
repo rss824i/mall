@@ -53,7 +53,6 @@
   }
 
   .info-param-key {
-    /*当value的数据量比较大的时候, 会挤到key,所以给一个固定的宽度*/
     width: 95px;
   }
 

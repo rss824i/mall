@@ -14,14 +14,7 @@
       }
     },
     props: {
-    //   message: {
-    //     type: String,
-    //     default: ""
-    //   },
-    //   show: {
-    //     type: Boolean,
-    //     default: false
-    //   }
+
     },
     components: {},
     created() {},
@@ -29,13 +22,9 @@
     computed: {},
     watch: {},
     methods: {
-        // duration=1500 默认值1500，可以只传message
         show(message='默认提示',duration=1500){
-            //  es6之前默认值写法   
-            // duration = duration||1500
             this.isShow=true
             this.message=message
-
             setTimeout(() => {
                 this.isShow=false
                  this.message=''
@@ -53,8 +42,10 @@
     transform: translate(-50%, -50%);
     padding: 8px 10px;
     color: #fff;
-    background-color: rgba(0, 0, 0, .75);
-
+    background-color: rgba(0, 0, 0, .70);
+    border-radius: 10px;
     z-index: 99;
+
+    
   }
 </style>

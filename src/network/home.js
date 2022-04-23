@@ -9,7 +9,6 @@ export function getHomeMutidate(){
 
 // 获取首页数据 三个选项中的第一页
 export function getHomeGoods(type,page){
-    // console.log("-------",page+type);
     return request({
         url: '/home/data',
         params:{

@@ -15,7 +15,6 @@ export function getRecommend () {
   })
 }
 
-//导出一个对象   
 //构建一个详情页面的对象实体
 export class Goods {
     // 构造函数
@@ -47,7 +46,6 @@ export class Goods {
   // 参数的信息实体
   export class GoodsParam {
     constructor(info, rule) {
-      // 注：images可能没有值(某些商品优质，某些没有值)
       this.image = info.images ? info.images[0] : '';
       this.infos = info.set;
       this.sizes = rule.tables;

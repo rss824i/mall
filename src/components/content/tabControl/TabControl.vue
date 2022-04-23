@@ -1,6 +1,5 @@
 <template>
   <div class="tab-control">
-      <!-- 当currentIndex（选中）等于index的时候 添加active属性 -->
     <div v-for="(item,index) in titles" 
         class="tab-control-item" :class="{active: index==currentIndex}" 
         @click="itemClick(index)">
@@ -18,7 +17,6 @@
          currentIndex: 0
      }
    },
-//    父传子
    props:{
        titles:{
            type:Array,
@@ -35,7 +33,6 @@
    methods: {
        itemClick(index){
            this.currentIndex=index;
-           // 子传父  发出事件tabClick  参数为Index
            this.$emit('tabClick',index)
        }
    }
@@ -65,8 +62,6 @@
 
     .active{
         color: var(--color-high-text);
-        /* 这里添加的是给div添加，会使整个div都为有横杠 */
-        /* border-bottom: 3px solid var(--color-high-text); */
     }
 
     .active span{

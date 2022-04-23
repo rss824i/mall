@@ -12,7 +12,6 @@
   import CartListItem from './CartListItem.vue'
 
 
-  // 导入vuex中的getters
   import {
     mapGetters
   } from 'vuex'
@@ -27,7 +26,6 @@
       CartListItem
     },
     created() {},
-    // mounted () {},
     computed: {
       ...mapGetters(['cartList'])
     },

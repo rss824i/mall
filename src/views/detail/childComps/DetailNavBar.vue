@@ -22,7 +22,6 @@
     data() {
       return {
         titles: ['商品', '参数', '评论', '推荐'],
-        //  记录选中的选项
         currentIndex: 0
       }
     },
@@ -30,19 +29,15 @@
       NavBar
     },
     created() {},
-    // mounted () {},
     computed: {},
     watch: {},
     methods: {
-      //   导航点击事件
       titleClick(index) {
         this.currentIndex = index
         this.$emit('titleClick',index)
       },
-      //    返回按钮点击
       backClick() {
-        // this.$router.go(-1) //返回方式1
-        this.$router.back() //返回方式2
+        this.$router.back() 
       }
     }
   }

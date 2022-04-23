@@ -11,7 +11,6 @@
     </div>
 
     <div :style="activeStyle">
-      <!-- 如果直接给slot动态绑定class的话，会不生效；因为div会将整个插槽替换掉，没有class属性了,上面也是如此 -->
       <slot name = "item-text"></slot>
     </div>
 
@@ -23,11 +22,9 @@
 		name: 'TabBarItem',
     // 父传子
     props:{
-      // 使用时传递参数
       path:String,
       activeColor: {
         type: String,
-        //默认为红色
         default: "red"
       }
     },
@@ -39,7 +36,6 @@
     // 计算属性
     computed:{
       isActive(){
-        // 当前的path是否是处于活跃状态的Path
         return this.path.indexOf(this.$route.path)!==-1
       },
       activeStyle(){
@@ -59,9 +55,7 @@
   .tab-bar-item {
      /* 均等分*/
     flex: 1;
-    /*居中*/
     text-align: center;
-    /*高度*/
     height: 49px;
     font-size: 14px;
   }
